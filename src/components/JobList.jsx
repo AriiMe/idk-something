@@ -1,8 +1,9 @@
 /** @format */
 import React, { Component } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 
-export default class JobList extends Component {
+class JobList extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.getJob(this.props.job);
@@ -34,3 +35,4 @@ export default class JobList extends Component {
     );
   }
 }
+export default withRouter(JobList);

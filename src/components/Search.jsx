@@ -24,9 +24,6 @@ export default class Search extends Component {
     const form = e.currentTarget;
     this.fetchJobs();
   };
-  showDetails = (e) => {
-    this.props.history.push("/jobDetails/");
-  };
 
   fetchJobs = async () => {
     try {
@@ -96,7 +93,7 @@ export default class Search extends Component {
                   <JobList
                     style={{}}
                     job={job}
-                    onClick={(e) => this.showDetails(e)}
+                    getJob={this.props.getJob}
                     top={index}
                     key={index}
                   />

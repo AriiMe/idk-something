@@ -5,8 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from './components/Nav'
 import JobDetail from './components/JobDetail'
 import React from "react";
-
-import { Container } from "react-bootstrap";
 import { Route } from "react-router-dom";
 
 class App extends React.Component {
