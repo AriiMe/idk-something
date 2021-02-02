@@ -24,6 +24,9 @@ export default class Search extends Component {
     const form = e.currentTarget;
     this.fetchJobs();
   };
+  showDetails = (e) => {
+    this.props.history.push("/jobDetails/");
+  };
 
   fetchJobs = async () => {
     try {
@@ -85,11 +88,21 @@ export default class Search extends Component {
             Search
           </Button>
         </Container>
-        <Container className="mt-5">
-          {this.state.jobs.length > 0 &&
-            this.state.jobs.map((job, index) => (
-              <JobList job={job} top={index} key={index} />
-            ))}
+        <Container className="mt-5 d-flex justify-content-center">
+          <Row>
+            {this.state.jobs.length > 0 &&
+              this.state.jobs.map((job, index) => (
+                <Col xs={6}>
+                  <JobList
+                    style={{}}
+                    job={job}
+                    onClick={(e) => this.showDetails(e)}
+                    top={index}
+                    key={index}
+                  />
+                </Col>
+              ))}
+          </Row>
         </Container>
       </div>
     );
