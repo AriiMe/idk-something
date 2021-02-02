@@ -8,98 +8,88 @@ import {
   InputGroup,
   FormControl,
   Button,
+  Form,
 } from "react-bootstrap";
+import JobList from "./JobList";
 
 export default class Search extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      query: "",
-      results: {},
-      loading: false,
-      message: "",
-      job: "",
-      location: "",
-    };
-  }
+  state = {
+    job: "",
+    location: "",
+    validated: false,
+    jobs: [],
+  };
   handleSubmit = (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    this.fetchJobs();
   };
 
   fetchJobs = async () => {
     try {
       let response = await fetch(
-        `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=${this.state.job}&location=${this.state.location}`
+        `https://yabba-dabba-duls-cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=${this.state.job}&location=${this.state.location}`
       );
-      let jobList = await response.json();
-      this.setState({ jobList: jobList });
-      console.log(jobList);
+      let jobs = await response.json();
+      this.setState({ jobs: jobs });
+      console.log(jobs);
     } catch (error) {
       console.log(error);
     }
   };
-  handleOnInputChange = (event) => {
-    const query = event.target.value;
-    // this.setState(
-    //   {
-    //     query: event.target.value,
-    //   },
-    //   () => console.log(this.state.query)
-    // );
-    if (!query) {
-      this.setState({
-        query,
-        results: {},
-        message: "",
-        totalPages: 0,
-        totalResults: 0,
-      });
-    } else {
-      this.setState({ query, loading: true, message: "" }, () => {
-        this.fetchJobs(1, query);
-      });
-    }
-  };
+
   render() {
-    const { query } = this.state;
     return (
       <div>
         <Container className="mt-5">
           <h2>Search for jobs in your area</h2>
-          <Row className="mt-3">
-            <Col xs={8}>
-              <InputGroup className="mb-3">
-                <FormControl
-                  placeholder="Position"
-                  name="query"
-                  aria-label="Position"
-                  aria-describedby="basic-addon1"
-                  value={query}
-                  onChange={this.handleOnInputChange}
-                />
-              </InputGroup>
-            </Col>
-            <Col xs={4}>
-              <InputGroup className="mb-3">
-                <FormControl
-                  placeholder="Location"
-                  name="query"
-                  aria-label="Location"
-                  aria-describedby="basic-addon1"
-                  value={query}
-                  onChange={this.handleOnInputChange}
-                />
-              </InputGroup>
-            </Col>
-          </Row>
+          <Form onSubmit={(e) => this.handleSubmit(e)} className="signInForm">
+            <Row className="mt-3">
+              <Col xs={12}>
+                <InputGroup className="mb-3">
+                  <FormControl
+                    placeholder="Position"
+                    validated={this.state.validated}
+                    aria-label="Position"
+                    aria-describedby="basic-addon1"
+                    value={this.state.job}
+                    onChange={(e) =>
+                      this.setState({ job: e.currentTarget.value })
+                    }
+                  />
+                </InputGroup>
+              </Col>
+              <Col xs={12}>
+                <InputGroup className="mb-3">
+                  <FormControl
+                    placeholder="Location"
+                    name="query"
+                    aria-label="Location"
+                    aria-describedby="basic-addon1"
+                    value={this.state.location}
+                    onChange={(e) =>
+                      this.setState({ location: e.currentTarget.value })
+                    }
+                  />
+                </InputGroup>
+              </Col>
+            </Row>
+          </Form>
           <Button
             variant="primary"
             style={{ borderRadius: "100px" }}
             className="w-100"
             type="submit"
+            onClick={this.handleSubmit}
           >
             Search
           </Button>
+        </Container>
+        <Container className="mt-5">
+          {this.state.jobs.length > 0 &&
+            this.state.jobs.map((job, index) => (
+              <JobList job={job} top={index} key={index} />
+            ))}
         </Container>
       </div>
     );
