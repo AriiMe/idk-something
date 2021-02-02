@@ -31,7 +31,7 @@ class JobDetail extends Component {
           <div className="col-sm-7">
             <p>
               <span className="font-weight-bold">Job Description:</span>{" "}
-              {this.props.job.description}
+              {this.htmlDesc()}
             </p>
 
             <a href={this.props.job.url} />
