@@ -6,29 +6,17 @@ import Nav from './components/Nav'
 import JobDetail from './components/JobDetail'
 import React from "react";
 import { Route } from "react-router-dom";
+import Fav from "./components/Fav";
 
 class App extends React.Component {
-  state = {
-    job: {},
-  };
-
-  getJob = (job) => {
-    this.setState({ job: job });
-  };
 
   render() {
     return (
       <div className="App">
         <Nav />
-        <Route
-          path="/"
-          exact
-          render={(props) => <Search {...props} getJob={this.getJob} />}
-        />
-        <Route
-          path="/jobDetails/"
-          render={(props) => <JobDetail {...props} job={this.state.job} />}
-        />
+        <Route path="/" exact render={(props) => <Search {...props} />} />
+        <Route path="/details/" render={(props) => <JobDetail {...props} />} />
+        <Route path="/favourites/" exact component={Fav} />
       </div>
     );
   }

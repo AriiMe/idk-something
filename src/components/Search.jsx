@@ -11,8 +11,11 @@ import {
   Form,
 } from "react-bootstrap";
 import JobList from "./JobList";
+import { connect } from "react-redux";
 
-export default class Search extends Component {
+const mapStateToProps = (state) => state;
+
+class Search extends Component {
   state = {
     job: "",
     location: "",
@@ -105,3 +108,4 @@ export default class Search extends Component {
     );
   }
 }
+export default connect(mapStateToProps)(Search);
