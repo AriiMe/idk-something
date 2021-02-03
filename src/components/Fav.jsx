@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { Component } from "react";
-import JobList from "./JobList";
 import { Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
