@@ -22,11 +22,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 class Fav extends Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.selectThisJob(this.props.job);
+  handleSubmit = (fav) => {
+    this.props.selectThisJob(fav);
     this.props.history.push("/details/");
   };
+  //
   render() {
     return (
       <div className="row mt-4 mb-4 mx-4">
@@ -40,7 +40,7 @@ class Fav extends Component {
                 Remove
               </Button>
               <img
-                onClick={(e) => this.handleSubmit(e)}
+                onClick={(e) => this.handleSubmit(fav)}
                 style={{ height: "150px", width: "150px" }}
                 className="mt-3"
                 src={fav.company_logo}
